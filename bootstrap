@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+shopt -s nullglob
+pwd=$PWD
+cd $BASHRCD
+for f in *.sh; do
+	source $f
+done
+cd $pwd
