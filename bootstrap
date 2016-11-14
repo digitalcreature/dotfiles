@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-shopt -s nullglob
 pwd=$PWD
 cd $BASHRCD
+shopt -s nullglob
 for f in *.sh; do
 	source $f
 done
+shopt -u nullglob
 cd $pwd
