@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
-pwd=$PWD
+last_pwd=$PWD
 
 # config
 export TEMPLATES_HOME=$DOTFILES_HOME/templates
 
 cd $DOTFILES_HOME
 
-# shell functions
+# load shell functions
 for f in bashrc/*.sh; do
 	source $f
 done
 
-
-cd $pwd
+cd $last_pwd

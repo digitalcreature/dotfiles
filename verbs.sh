@@ -1,3 +1,6 @@
+
+# call the verb function for a root command
+# print usage and return error on user error
 function _verb {
 	local parent=$1
 	local verb=$2
