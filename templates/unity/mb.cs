@@ -5,4 +5,3 @@ using System.Collections.Generic;
 public class ${name} : MonoBehaviour {
 
 }
-save to ${fname} in ${dir} (${path})

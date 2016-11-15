@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 pwd=$PWD
-cd $BASHRCD
-for f in *.bashrc; do
+
+# config
+export TEMPLATES_HOME=$DOTFILES_HOME/templates
+
+cd $DOTFILES_HOME
+
+# shell functions
+for f in bashrc/*.sh; do
 	source $f
 done
+
+
 cd $pwd
