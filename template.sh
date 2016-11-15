@@ -10,8 +10,9 @@ function _template {
 		dir
 	"
 	if [[ $template && $path ]]; then
-		template=`compgen -f $TEMPLATES_HOME/$template*`
-		if [ -f $template ]; then
+		local _template=`compgen -f $TEMPLATES_HOME/$template*`
+		if [[ $_template && -f $_template ]]; then
+			template=$_template
 			local fname=${path##*/}
 			local extension=${fname##*.}
 			if [[ $extension == $fname ]]; then
@@ -44,7 +45,7 @@ function _template {
 			return 0
 		else
 			echo "usage: $usage"
-			echo "no template $template found"
+			echo "no template '$template' found"
 			return 1
 		fi
 	else
