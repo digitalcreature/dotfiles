@@ -6,7 +6,24 @@ function u3d {
 	_verb u3d $@
 }
 
-function _u3d_mb {
-	local usage="$parent mb <path>"
-	_template unity/mb $1
+function _u3d_monobehaviour {
+	local usage="$parent monobehaviour <path>"
+	_template unity3d/monobehaviour $1
 }
+
+function _comp_u3d {
+	local func=$1
+	local cur=$2
+	compopt -o default
+	case $COMP_CWORD in
+		1)
+			COMPREPLY=(`_verbgen $func $cur`)
+			;;
+		*)
+			COMPREPLY=()
+			;;
+	esac
+	return 0
+}
+
+complete -F _comp_u3d u3d

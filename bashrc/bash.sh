@@ -6,19 +6,11 @@ function template {
 }
 
 function _comp_template {
-	local cur=${COMP_WORDS[COMP_CWORD]}
+	local cur=$2
+	compopt +o default
 	case $COMP_CWORD in
 		1)
-			local templates=$(
-				find $TEMPLATES_HOME -type f | (
-					while read line; do
-						line=${line#$TEMPLATES_HOME/}
-						line=${line%.*}
-						echo $line
-					done
-				)
-			)
-			COMPREPLY=(`compgen -W "$templates" -- $cur`)
+			COMPREPLY=(`_templategen $cur`)
 			return 0
 			;;
 		2)
@@ -32,7 +24,8 @@ function _comp_template {
 			return 0
 			;;
 		*)
-			compopt +o default
+			COMPREPLY=()
+			return 0
 			;;
 	esac
 }

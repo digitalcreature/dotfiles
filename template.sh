@@ -25,7 +25,8 @@ function _template {
 			if [[ ! $name ]]; then
 				name=${fname%.*}
 			fi
-			path=$dir/$name.$extension
+			fname=${fname%.*}.$extension
+			path=$dir/$fname
 			for var in $exports; do
 				local gvar=$var
 				local tvar=_tmp_$var
@@ -52,4 +53,17 @@ function _template {
 		echo "usage: $usage"
 		return 1
 	fi
+}
+
+function _templategen {
+	local template=$1
+	find $TEMPLATES_HOME -type f | (
+		while read line; do
+			line=${line#$TEMPLATES_HOME/}
+			line=${line%.*}
+			if [[ $line =~ ^$template ]]; then
+				echo $line
+			fi
+		done
+	)
 }

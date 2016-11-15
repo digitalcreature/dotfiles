@@ -4,9 +4,9 @@ function _verb {
 	shift 2
 	parent=${parent// /_}
 	if [ $verb ]; then
-		local call="_$parent""_$verb"
-		if type $call &> /dev/null; then
-			eval $call $@
+		local func="_$parent""_$verb"
+		if type $func &> /dev/null; then
+			eval $func $@
 		else
 			echo "usage: $usage"
 			echo "unknown verb '$verb'"
@@ -16,4 +16,22 @@ function _verb {
 		echo "usage: $usage"
 		return 1
 	fi
+}
+
+# find list of valid verbs for a given command
+# (usable with compgen)
+function _verbgen {
+	local parent=$1
+	local query=$2
+	parent=${parent// /_}
+	compgen -A function -- | (
+		while read line; do
+			local verb=${line#'_'$parent'_'}
+			if [[ $verb != $line && $verb =~ ^$query ]]; then
+				if [[ $verb == ${verb%%_*} ]]; then
+					echo $verb
+				fi
+			fi
+		done
+	)
 }
