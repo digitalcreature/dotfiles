@@ -4,10 +4,7 @@ source template.sh
 # unity3d utils
 
 # root command
-function u3d {
-	local usage="u3d <verb> [args]"
-	_verb u3d $@
-}
+alias u3d="_verb u3d"
 
 # create new monobehaviour from template
 function _u3d_monobehaviour {

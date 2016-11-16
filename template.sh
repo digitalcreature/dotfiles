@@ -66,10 +66,8 @@ function _template {
 # usable with compgen
 function _templategen {
 	local query=$2
-	find $TEMPLATES_HOME -type f | (
+	find $TEMPLATES_HOME -type f | sed -r 's?'$TEMPLATES_HOME'/??; s/\.[^\.]*$//' | (
 		while read line; do
-			line=${line#$TEMPLATES_HOME/}
-			line=${line%.*}
 			if [[ $line =~ ^$query ]]; then
 				echo $line
 			fi

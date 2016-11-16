@@ -4,6 +4,7 @@
 function _verb {
 	local parent=$1
 	local verb=$2
+	local usage=${usage:-"$parent <verb> ..."}
 	shift 2
 	parent=${parent// /_}
 	if [ $verb ]; then
@@ -26,15 +27,16 @@ function _verb {
 function _verbgen {
 	local parent=$1
 	local query=$2
-	parent=${parent// /_}
-	compgen -A function -- | (
-		while read line; do
-			local verb=${line#'_'$parent'_'}
-			if [[ $verb != $line && $verb =~ ^$query ]]; then
-				if [[ $verb == ${verb%%_*} ]]; then
-					echo $verb
+	if [ $parent ]; then
+		compgen -A "function" -- | (
+			while read line; do
+				local verb=${line#'_'$parent'_'}
+				if [[ $verb != $line && $verb =~ ^$query ]]; then
+					if [[ $verb == ${verb%%_*} ]]; then
+						echo $verb
+					fi
 				fi
-			fi
-		done
-	)
+			done
+		)
+	fi
 }
