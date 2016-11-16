@@ -1,5 +1,4 @@
 source verbs.sh
-source template.sh
 
 # unity3d utils
 
@@ -9,7 +8,7 @@ alias u3d="_verb u3d"
 # create new monobehaviour from template
 function _u3d_monobehaviour {
 	local usage="$parent monobehaviour <path>"
-	_template unity3d/monobehaviour $1
+	template unity3d/monobehaviour $1
 }
 
 # tab completion

@@ -1,10 +1,11 @@
 
 # generate new files from templates
 # templates are stored in $TEMPLATES_HOME/
-function _template {
+function template {
 	local template=$1	# name of template to use
 	local path=$2		# path of new file to create
 	local name=$3		# optional 'name' (template dependant; taken as filename without the extension if absent)
+	local usage=${usage:-"template <template> <path> [name]"}
 	# local variables to export to template
 	local exports="
 		path
@@ -66,11 +67,34 @@ function _template {
 # usable with compgen
 function _templategen {
 	local query=$2
-	find $TEMPLATES_HOME -type f | sed -r 's?'$TEMPLATES_HOME'/??; s/\.[^\.]*$//' | (
-		while read line; do
-			if [[ $line =~ ^$query ]]; then
-				echo $line
-			fi
-		done
-	)
+	find $TEMPLATES_HOME -type f |
+		sed -r 's?'$TEMPLATES_HOME'/??; s/\.[^\.]*$//' |
+		grep -P '^'$query
 }
+
+# template tab completetion
+function _comp_template {
+	compopt +o default
+	case $COMP_CWORD in
+		1)
+			COMPREPLY=(`_templategen "$@"`)
+			return 0
+			;;
+		2)
+			compopt -o default
+			COMPREPLY=()
+			return 0
+			;;
+		3)
+			compopt -o bashdefault
+			COMPREPLY=()
+			return 0
+			;;
+		*)
+			COMPREPLY=()
+			return 0
+			;;
+	esac
+}
+
+complete -F _comp_template template
