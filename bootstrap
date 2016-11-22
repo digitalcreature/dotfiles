@@ -12,3 +12,5 @@ for f in bashrc/*.sh; do
 done
 
 cd $last_pwd
+
+export PATH=.:.local/bin:$PATH
