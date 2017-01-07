@@ -8,7 +8,7 @@ function _loadsecret {
 		SECRETS_PATH="$DOTFILES_HOME/secrets"
 	fi
 	if [ -f $SECRETS_PATH ]; then
-		auth=`awk '$1 == "'$service'" {print; exit}' $SECRETS_PATH`
+		auth=`awk 'tolower($1) == tolower("'$service'") {print; exit}' $SECRETS_PATH`
 		if [[ $auth ]]; then
 			user=`awk '{print $2}' <<< $auth`
 			secret=`awk '{print $3}' <<< $auth`
