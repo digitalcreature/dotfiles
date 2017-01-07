@@ -1,29 +1,39 @@
 # tgrehawi's shell shenanigans
-my custom shell aliases n stuff
+My custom shell aliases n' stuff
 
-## dependencies
-available through apt and most other package managers:
+## Dependencies
+Available through apt and most other package managers:
 - git
 - bash
 
-manual install only:
+Manual install only:
 - [jq](https://stedolan.github.io/jq/)
 - [bash-it](https://github.com/Bash-it/bash-it)
 
-## installation
-1. install dependencies
+## Installation
+1. Install dependencies
 2. `$ git clone git@github.com:tgrehawi/dotfiles ~/.dotfiles`
-3. add the following to the end of `~/.bashrc`:
+3. Add the following to the end of `~/.bashrc`:
 ```bash
 export DOTFILES_HOME="$HOME/.dotfiles"
 source $DOTFILES_HOME/bootstrap
 ```
 
-## secrets
-certain functions require secrets or access tokens in order to use certain apis (such as the github functions). in order to use such functions, make sure the secret required is present in the enviroment in the following form:
-```
-SERVICE_SECRET = <your secret/token/auth here>
-```
-where `SERVICE` is the name of the service/api (`GITHUB_SECRET` for github, `TUMBLR_SECRET` for tumblr, etc.)
+## Authentication
+Certain functions require secrets or access tokens in order to use certain APIs (such as the GitHub functions). In order to use such functions, authentication information must be supplied in a configuration file.
 
-if `secrets.sh` is present in the `$DOTFILES_HOME` (e.g. the root of the local repository), it will be sourced before all other dotfiles, and will be ignored by git.
+By default, this secrets file will be expected at `$DOTFILES_HOME/secrets`. If present in the default location, it will be ignored by git. If you want your secrets somewhere else, simply set `$SECRETS_PATH` to its location.
+
+### Secrets File Format
+Each service requiring authentication should be listed in the secrets file one per line, as follows:
+```
+service username secret
+```
+Example:
+```
+github tgrehawi i63q7wygufsda8f6n7yao397no8fyg32
+gitlab tgrehawi i63q7wygufsda8f6n7yao397no8fyg32
+tumblr tgrehawi iugkfhsdkg97boyq8328gfwifno2ryui
+twitter tgrehawi oaiugkhsfjdghunkhmdfgniskuhdfgni
+```
+(Those are just keysmashes btw don't bother trying them)
