@@ -24,6 +24,6 @@ certain functions require secrets or access tokens in order to use certain apis 
 ```
 SERVICE_SECRET = <your secret/token/auth here>
 ```
-where `SERVICE` is the name of the service/api (`GITHUB_SECRET` for github, `TUMBLR_SECERT` for tumblr, etc.)
+where `SERVICE` is the name of the service/api (`GITHUB_SECRET` for github, `TUMBLR_SECRET` for tumblr, etc.)
 
 if `secrets.sh` is present in the `$DOTFILES_HOME` (e.g. the root of the local repository), it will be sourced before all other dotfiles, and will be ignored by git.
