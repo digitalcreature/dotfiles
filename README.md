@@ -2,11 +2,8 @@
 My custom shell aliases n' stuff
 
 ## Dependencies
-Available through apt and most other package managers:
 - git
 - bash
-
-Manual install only:
 - [jq](https://stedolan.github.io/jq/)
 - [bash-it](https://github.com/Bash-it/bash-it)
 
