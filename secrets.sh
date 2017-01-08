@@ -28,7 +28,7 @@ function _promptsecret {
 		read -erp "Username: " user
 	done
 	while [[ ! $secret ]]; do
-		read -ersp "Secret: " secret
+		read -rsp "Secret: " secret
 	done
 	echo
 }
