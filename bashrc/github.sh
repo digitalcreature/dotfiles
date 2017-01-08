@@ -43,7 +43,16 @@ function _github_new {
 # github delete <repo>
 # requires user to enter password
 function _github_delete {
-	echo
+	local usage="$parent delete <repo>"
+	repo=$1
+	if [[ $repo ]]; then
+		echo "You are trying to delete GitHub repo '$repo'."
+		__github_auth_requirepassword
+		echo '{}' | __github_api /repos/$user/$repo DELETE
+	else
+		echo "usage: $usage"
+		return 1
+	fi
 }
 
 # add <repo> as a remote of the current repo
