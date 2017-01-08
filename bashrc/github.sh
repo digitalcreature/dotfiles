@@ -30,12 +30,20 @@ function _github_init {
 function _github_new {
 	local usage="$parent new <repo>"
 	repo=$1
+	__github_auth
 	if [[ $repo ]]; then
 		echo '{ "name": "'$repo'" }' | __github_api /user/repos POST
 	else
 		echo "usage: $usage"
 		return 1
 	fi
+}
+
+# delete a github repo
+# github delete <repo>
+# requires user to enter password
+function _github_delete {
+	echo
 }
 
 # add <repo> as a remote of the current repo
@@ -70,14 +78,28 @@ function _github_remote {
 # __github_api <uri> [method]
 # [method] defaults to GET
 function __github_api {
-	__github_auth
 	local url="https://api.github.com"$1
 	local method=${2:-"GET"}
 	curl -u $user:$secret -X $method -H "Content-Type: application/json" --data @- $url
 }
 
+# authenticate user using secret file
+# writes username to $user and secret to $secret (declared local in root function)
 function __github_auth {
 	_tryloadsecret "GitHub"
+}
+
+# authenticate user using secret file, but require manual password entry
+# used for dangerous stuff like deleting repos so that i dont fuck up and delete things by mistake
+function __github_auth_requirepassword {
+	if __github_auth; then
+		secret=
+		echo "Manual authentication required. Enter GitHub password for user $user:"
+		while [[ ! $secret ]]; do
+			read -rsp "Password: " secret
+			echo
+		done
+	fi
 }
 
 # tab completion
