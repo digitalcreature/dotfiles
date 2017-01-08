@@ -35,10 +35,13 @@ function _promptsecret {
 
 # try to load the secret useing _loadsecret. on failure, prompt user using _promptsecret.
 # same usage as those functions
+# returns failed if secret had to be entered manually
 function _tryloadsecret {
 	if ! _loadsecret $@; then
 		echo "Couldn't find authentication information for $1."
 		echo "See $DOTFILES_HOME/README.md for details."
 		_promptsecret
+		return 1
 	fi
+	return 0
 }
