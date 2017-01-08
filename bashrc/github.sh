@@ -2,11 +2,28 @@
 source verbs.sh
 source secrets.sh
 
-alias github="_verb github"
+function github {
+	local user
+	local secret
+	_verb github $@
+}
 
 # init current directory as a github repo
 # github init [repo]
-# [repo] defaults to name of current directory 
+# [repo] defaults to name of current directory
+function _github_init {
+	local usage="$parent init [repo]"
+	local repo=$1
+	if [[ ! $repo ]]; then
+		repo=${PWD%/}
+		repo=${repo##*/}
+	fi
+	if ! git checkrepo; then
+		git init
+	fi
+	_github_new $repo
+	_github_remote
+}
 
 # create a new github repo
 # github new <repo>
@@ -41,18 +58,26 @@ function _github_remote {
 	local secret
 	if ! _loadsecret "GitHub"; then
 		user=`whoami`
+		echo "No authentication found, using login '$user' as GitHub username."
 	fi
-	git remote add $remote git@github.com:$user/$repo
+	repo="git@github.com:$user/$repo"
+	local cmd="git remote add $remote $repo"
+	echo ' $ '$cmd
+	eval $cmd
 }
 
+# make a github api call
+# __github_api <uri> [method]
+# [method] defaults to GET
 function __github_api {
-	local user
-	local secret
-	_tryloadsecret "GitHub"
+	__github_auth
 	local url="https://api.github.com"$1
 	local method=${2:-"GET"}
-	local cmd='curl -u $user:$secret -X $method -H "Content-Type: application/json" --data @- $url'
-	eval $cmd
+	curl -u $user:$secret -X $method -H "Content-Type: application/json" --data @- $url
+}
+
+function __github_auth {
+	_tryloadsecret "GitHub"
 }
 
 # tab completion
