@@ -1,5 +1,6 @@
 
 # generate new files from templates
+# template <template> <path> [name]
 # templates are stored in $TEMPLATES_HOME/
 function template {
 	local template=$1	# name of template to use
