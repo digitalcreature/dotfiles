@@ -30,9 +30,10 @@ function _github_init {
 function _github_new {
 	local usage="$parent new <repo>"
 	repo=$1
-	__github_auth
 	if [[ $repo ]]; then
-		echo '{ "name": "'$repo'" }' | __github_api /user/repos POST
+		__github_auth
+		echo "Creating GitHub repo $user/$repo"
+		echo '{ "name": "'$repo'" }' | __github_api /user/repos POST | jq '{"name": .full_name, "url": .html_url, "error": .message}'
 	else
 		echo "usage: $usage"
 		return 1
@@ -48,7 +49,7 @@ function _github_delete {
 	if [[ $repo ]]; then
 		echo "You are trying to delete GitHub repo '$repo'."
 		__github_auth_requirepassword
-		echo '{}' | __github_api /repos/$user/$repo DELETE
+		echo '{}' | __github_api /repos/$user/$repo DELETE | jq '{"error": .message}'
 	else
 		echo "usage: $usage"
 		return 1
@@ -89,7 +90,7 @@ function _github_remote {
 function __github_api {
 	local url="https://api.github.com"$1
 	local method=${2:-"GET"}
-	curl -u $user:$secret -X $method -H "Content-Type: application/json" --data @- $url
+	curl -u $user:$secret -X $method -H "Content-Type: application/json" --data @- $url 2> /dev/null
 }
 
 # authenticate user using secret file
