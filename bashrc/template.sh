@@ -45,6 +45,7 @@ function template {
 				mkdir -p $dir
 			fi
 			cat $template | envsubst > $path	# do the thing! substitute enviroment variables in template
+			echo $path
 			for var in $exports; do			# un-export locals and put everything back where it belongs
 				local gvar=$var
 				local tvar=_tmp_$var
