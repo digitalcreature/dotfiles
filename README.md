@@ -16,6 +16,13 @@ export DOTFILES_HOME="$HOME/.dotfiles"
 source $DOTFILES_HOME/bootstrap
 ```
 
+## Updates
+To update local dotfiles, simply run:
+```bash
+$ dotfiles update
+```
+And reload bash via `$ exec bash`.
+
 ## Authentication
 Certain functions require secrets or access tokens in order to use certain APIs (such as the GitHub functions). In order to use such functions, authentication information must be supplied in a configuration file.
 
