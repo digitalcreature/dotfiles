@@ -21,8 +21,9 @@ function _github_init {
 	if ! git checkrepo; then
 		git init
 	fi
-	_github_new $repo &&
+	_github_new $repo
 	_github_remote $repo
+	echo "# ${repo^}"
 }
 
 # create a new github repo
