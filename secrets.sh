@@ -40,7 +40,7 @@ function _tryloadsecret {
 	if ! _loadsecret $@; then
 		echo "Couldn't find authentication information for $1."
 		echo "See $DOTFILES_HOME/README.md for details."
-		_promptsecret
+		_promptsecret $@
 		return 1
 	fi
 	return 0
