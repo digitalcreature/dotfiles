@@ -18,12 +18,24 @@ function _github_init {
 		repo=${PWD%/}
 		repo=${repo##*/}
 	fi
+	local isnew=false
 	if ! git checkrepo; then
 		git init
+		isnew=true
 	fi
 	_github_new $repo
 	_github_remote $repo
-	echo "# ${repo^}"
+	if $isnew; then
+		if [ ! -e README.md ]; then
+			eval `git var GIT_EDITOR` \
+			`title=$(python3 $DOTFILES_HOME/py/titlecase.py $repo) \
+			template git/README README.md`
+		fi
+		git add -A
+		git commit -e -m "init commit
+
+## auto generated initial commit message"
+	fi
 }
 
 # create a new github repo
