@@ -6,6 +6,7 @@ My custom shell aliases n' stuff
 - bash
 - [jq](https://stedolan.github.io/jq/)
 - [bash-it](https://github.com/Bash-it/bash-it)
+- python3
 
 ## Installation
 1. Install dependencies
