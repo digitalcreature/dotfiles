@@ -97,6 +97,27 @@ function _github_remote {
 	eval $cmd
 }
 
+# clone a github repo
+# usage: github clone <repo> [path]
+function _github_clone {
+	local usage="$parent clone <repo> [path]"
+	local repo=$1
+	local path=$2
+	if [[ $repo ]]; then
+		if [[ $repo == ${repo#*/} ]]; then
+			__github_auth
+			repo=$user/$repo
+		fi
+		local cmd="git clone git@github.com:$repo $path"
+		echo " $ "$cmd
+		eval $cmd
+		return 0
+	else
+		echo "usage: $usage"
+		return 1
+	fi
+}
+
 # make a github api call
 # __github_api <uri> [method]
 # [method] defaults to GET
