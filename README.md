@@ -5,17 +5,13 @@ My custom shell aliases n' stuff
 - git
 - bash
 - [jq](https://stedolan.github.io/jq/)
-- [bash-it](https://github.com/Bash-it/bash-it)
 - python3
 
 ## Installation
 1. Install dependencies
-2. `$ git clone git@github.com:tgrehawi/dotfiles ~/.dotfiles`
-3. Add the following to the end of `~/.bashrc`:
-```bash
-export DOTFILES_HOME="$HOME/.dotfiles"
-source $DOTFILES_HOME/bootstrap
-```
+2. Clone this repo anywhere you want
+3. Enter the repo, and run `install.sh`
+4. You are done! `exec bash` to reload.
 
 ## Updates
 To update local dotfiles, simply run:
