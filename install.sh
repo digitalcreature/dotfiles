@@ -10,6 +10,6 @@ if [ -f ~/.bashrc ]; then
 fi
 echo "Copying .bashrc..."
 cp .bashrc ~/.bashrc
-echo "export DOTFILES_HOME=\""$PWD"\"" >> ~/.bashrc
-echo "source $DOTFILES_HOME/bootstrap" >> ~/.bashrc
+echo 'export DOTFILES_HOME="'$PWD'"' >> ~/.bashrc
+echo 'source $DOTFILES_HOME/bootstrap' >> ~/.bashrc
 echo "Installation complete!"
