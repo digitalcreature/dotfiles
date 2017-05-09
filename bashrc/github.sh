@@ -26,11 +26,6 @@ function _github_init {
 	_github_new $repo
 	_github_remote $repo
 	if $isnew; then
-		if [ ! -e README.md ]; then
-			eval `git var GIT_EDITOR` \
-			`title=$(python3 $DOTFILES_HOME/py/titlecase.py $repo) \
-			template git/README README.md`
-		fi
 		git add -A
 		git commit -e -m "init commit
 
@@ -51,6 +46,14 @@ function _github_new {
 		echo "usage: $usage"
 		return 1
 	fi
+}
+
+# list your repos
+# github list
+function _github_list {
+	local usage="$parent list"
+	__github_auth
+	echo '{}' | __github_api /user/repos | jq '.[] | .full_name' | sed -r 's/"([^"]*)"/\1/'
 }
 
 # delete a github repo
